@@ -197,7 +197,11 @@ def mouse_look(cont):
 
 def load_chunks(cont):
 	""" This function is intended to load parts of the scenery (named chunks) dynamically based on player position in the world, and this way, being possible to make open world games easily.
-	Each part of the scenery is a blend file, named according to its coordinate (in a scale of 50 X 50 meters). """
+	Each part of the scenery is a blend file, named according to its coordinate (in a scale of 50 X 50 meters).
+	
+	SCENE: current level
+	OBJECT: 'spatial'
+	FREQUENCY: collision with chunk area dependent """
 	
 	own = cont.owner
 	maps = expandPath("//map/")
@@ -212,6 +216,7 @@ def load_chunks(cont):
 	# Functions
 	LibList = bge.logic.LibList
 	LibLoad = bge.logic.LibLoad
+	LibFree = bge.logic.LibFree
 	
 	def gen_chunk_name(coords_list):
 		"""  Generates a string name of the map chunk, in the format "001_002". """
@@ -245,39 +250,39 @@ def load_chunks(cont):
 			
 			# Current
 			if not (maps + gen_chunk_name(chunk_current) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_current) + ext, "Scene", async = False, load_actions = True)
+				LibLoad(maps + gen_chunk_name(chunk_current) + ext, "Scene", async = True, load_actions = True)
 			
 			# Northwest
 			if S_in_chunk.hitObject["northwest"] and not (maps + gen_chunk_name(chunk_nw) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_nw) + ext, "Scene", async = False, load_actions = True)
+				LibLoad(maps + gen_chunk_name(chunk_nw) + ext, "Scene", async = True, load_actions = True)
 				
 			# North
 			if S_in_chunk.hitObject["north"] and not (maps + gen_chunk_name(chunk_n) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_n) + ext, "Scene", async = False, load_actions = True)
+				LibLoad(maps + gen_chunk_name(chunk_n) + ext, "Scene", async = True, load_actions = True)
 				
 			# Northeast
 			if S_in_chunk.hitObject["northeast"] and not (maps + gen_chunk_name(chunk_ne) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_ne) + ext, "Scene", async = False, load_actions = True)
+				LibLoad(maps + gen_chunk_name(chunk_ne) + ext, "Scene", async = True, load_actions = True)
 				
 			# West
 			if S_in_chunk.hitObject["west"] and not (maps + gen_chunk_name(chunk_w) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_w) + ext, "Scene", async = False, load_actions = True)
+				LibLoad(maps + gen_chunk_name(chunk_w) + ext, "Scene", async = True, load_actions = True)
 				
 			# East
 			if S_in_chunk.hitObject["east"] and not (maps + gen_chunk_name(chunk_e) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_e) + ext, "Scene", async = False, load_actions = True)
+				LibLoad(maps + gen_chunk_name(chunk_e) + ext, "Scene", async = True, load_actions = True)
 				
 			# Southwest
 			if S_in_chunk.hitObject["southwest"] and not (maps + gen_chunk_name(chunk_sw) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_sw) + ext, "Scene", async = False, load_actions = True)
+				LibLoad(maps + gen_chunk_name(chunk_sw) + ext, "Scene", async = True, load_actions = True)
 				
 			# South
 			if S_in_chunk.hitObject["south"] and not (maps + gen_chunk_name(chunk_s) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_s) + ext, "Scene", async = False, load_actions = True)
+				LibLoad(maps + gen_chunk_name(chunk_s) + ext, "Scene", async = True, load_actions = True)
 				
 			# Southeast
 			if S_in_chunk.hitObject["southeast"] and not (maps + gen_chunk_name(chunk_se) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_se) + ext, "Scene", async = False, load_actions = True)
+				LibLoad(maps + gen_chunk_name(chunk_se) + ext, "Scene", async = True, load_actions = True)
 				
 			# Warning message
 			print("Loaded adjacents of " + str(O_collision["current_chunk_x"]) + "_" + str(O_collision["current_chunk_y"]) + ext)
@@ -288,7 +293,7 @@ def load_chunks(cont):
 		for lib in LibList():
 			
 			# Check if libs have coordinates in its names
-			try:
+			if "\map\chunk_" in lib:
 					
 				lib_coords = [int(lib[-13:-10]), int(lib[-9:-6])]
 				
@@ -298,9 +303,6 @@ def load_chunks(cont):
 					# Free chunk and warn through message
 					LibFree(lib)
 					print("Freed", lib[-13:])
-				
-			except:
-				pass
 					
 	### If not in a chunk area ###
 	if not S_in_chunk.positive:
