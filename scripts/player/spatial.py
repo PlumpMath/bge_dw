@@ -215,7 +215,8 @@ def load_chunks(cont):
 	O_collision = own.parent
 	
 	# Properties
-	P_async = True
+	P_async = False
+	P_actions = True
 	
 	def gen_chunk_name(coords_list):
 		"""  Generates a string name of the map chunk, in the format "001_002". """
@@ -247,41 +248,42 @@ def load_chunks(cont):
 		### Load chunks ###
 		if True:
 			
+			
 			# Current
 			if not (maps + gen_chunk_name(chunk_current) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_current) + ext, "Scene", async = True, load_actions = True)
+				P_lib = LibLoad(maps + gen_chunk_name(chunk_current) + ext, "Scene", async = P_async, load_actions = P_actions)
 			
 			# Northwest
 			if S_in_chunk.hitObject["northwest"] and not (maps + gen_chunk_name(chunk_nw) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_nw) + ext, "Scene", async = P_async, load_actions = True)
+				P_lib = LibLoad(maps + gen_chunk_name(chunk_nw) + ext, "Scene", async = P_async, load_actions = P_actions)
 				
 			# North
 			if S_in_chunk.hitObject["north"] and not (maps + gen_chunk_name(chunk_n) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_n) + ext, "Scene", async = P_async, load_actions = True)
+				P_lib = LibLoad(maps + gen_chunk_name(chunk_n) + ext, "Scene", async = P_async, load_actions = P_actions)
 				
 			# Northeast
 			if S_in_chunk.hitObject["northeast"] and not (maps + gen_chunk_name(chunk_ne) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_ne) + ext, "Scene", async = P_async, load_actions = True)
+				P_lib = LibLoad(maps + gen_chunk_name(chunk_ne) + ext, "Scene", async = P_async, load_actions = P_actions)
 				
 			# West
 			if S_in_chunk.hitObject["west"] and not (maps + gen_chunk_name(chunk_w) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_w) + ext, "Scene", async = P_async, load_actions = True)
+				P_lib = LibLoad(maps + gen_chunk_name(chunk_w) + ext, "Scene", async = P_async, load_actions = P_actions)
 				
 			# East
 			if S_in_chunk.hitObject["east"] and not (maps + gen_chunk_name(chunk_e) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_e) + ext, "Scene", async = P_async, load_actions = True)
+				P_lib = LibLoad(maps + gen_chunk_name(chunk_e) + ext, "Scene", async = P_async, load_actions = P_actions)
 				
 			# Southwest
 			if S_in_chunk.hitObject["southwest"] and not (maps + gen_chunk_name(chunk_sw) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_sw) + ext, "Scene", async = P_async, load_actions = True)
+				P_lib = LibLoad(maps + gen_chunk_name(chunk_sw) + ext, "Scene", async = P_async, load_actions = P_actions)
 				
 			# South
 			if S_in_chunk.hitObject["south"] and not (maps + gen_chunk_name(chunk_s) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_s) + ext, "Scene", async = P_async, load_actions = True)
+				P_lib = LibLoad(maps + gen_chunk_name(chunk_s) + ext, "Scene", async = P_async, load_actions = P_actions)
 				
 			# Southeast
 			if S_in_chunk.hitObject["southeast"] and not (maps + gen_chunk_name(chunk_se) + ext) in LibList():
-				LibLoad(maps + gen_chunk_name(chunk_se) + ext, "Scene", async = P_async, load_actions = True)
+				P_lib = LibLoad(maps + gen_chunk_name(chunk_se) + ext, "Scene", async = P_async, load_actions = P_actions)
 				
 			# Warning message
 			print("Loaded adjacents of " + str(O_collision["current_chunk_x"]) + "_" + str(O_collision["current_chunk_y"]) + ext)
